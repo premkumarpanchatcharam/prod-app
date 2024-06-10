@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: prod-guestbook
+spec:
+  goTemplate: true
+  generators:
+  - list:
+      elements:
+      - cluster: prod-app-cluster
+        url: https://kubernetes.default.svc
+        foo: baz
+  template:
+    metadata:
+      name: 'prod-guestbook'
+      labels:
+        foo: '{{.foo}}'
+    spec:
+      project: default
+      source:
+        repoURL: 'https://github.com/premkumarpanchatcharam/argocd-example-apps.git'
+        targetRevision: HEAD
+        path: guestbook/guestbook-app
+      destination:
+        server: '{{.url}}'
+        namespace: prod-guestbook
+      syncPolicy:
+        syncOptions:
+        - CreateNamespace=true
+        automated:
+          selfHeal: true
+          prune: true
