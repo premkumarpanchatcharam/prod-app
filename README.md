@@ -22,7 +22,10 @@ gcloud container clusters get-credentials prod-app-cluster --zone $ZONE --projec
 
 kubectl apply -n argocd -f https://github.com/premkumarpanchatcharam/prod-app/guestbook/guestbook-cd/guestbook-argocd-applicationset.yaml
 
-D. Login into ArgoCD and verify the application is deployment and in syn.
+D. Login into ArgoCD and verify the application is deployed and insyn.
+
+![Uploading image.png…]()
+
 
 E. if you update the deployment related any config change, the Git sync actions identify the change and push the changes to GKE.
 For ex: if you change the replica from 2 and 3 and wait for few min to see the update in the GKE cluser.
